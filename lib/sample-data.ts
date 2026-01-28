@@ -31,7 +31,7 @@ export const sampleProductsReviews: Record<string, Product> = {
         reviewer: "Emily K.",
         stars: 4,
         review:
-          "Really impressed with the cutting quality. It mulches the grass perfectly. Only downside is it can't handle thick weeds, but that's expected. Worth the price.",
+          "Really impressed with the cutting quality! It mulches the grass perfectly. Only downside is it can't handle thick weeds, but that's expected. Worth the price.",
         date: "2025-12-01T16:45:00Z",
       },
     ],
