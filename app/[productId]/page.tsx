@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProduct, getProducts } from "@/lib/sample-data";
 import { Reviews } from "@/components/ui/reviews";
+import { AIReviewSummary } from "@/components/ui/ai-review-summary";
 
 export default async function ProductPage({
   params,
@@ -27,7 +28,7 @@ export default async function ProductPage({
             {product.description}
           </p>
         </div>
-
+        <AIReviewSummary product={product} />
         {/* Reviews */}
         <Reviews product={product} />
       </div>
