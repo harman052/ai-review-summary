@@ -1,7 +1,14 @@
 import { generateText, streamText, Output } from "ai";
 import { Product, ReviewInsightsSchema } from "./types";
+import { cacheLife, cacheTag } from "next/cache";
+
+const model = "openai/gpt-5.4-mini";
 
 export async function summarizeReviews(product: Product): Promise<string> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag(`product-summary-${product.slug}`);
+
   const averageRating =
     product.reviews.reduce((acc, review) => acc + review.stars, 0) /
     product.reviews.length;
@@ -38,7 +45,7 @@ ${product.reviews
 
   try {
     const { text } = await generateText({
-      model: "anthropic/claude-sonnet-4.5",
+      model,
       prompt,
       maxOutputTokens: 1000,
       temperature: 0.75,
@@ -92,7 +99,7 @@ ${product.reviews
   .join("\n\n")}`;
 
   const result = streamText({
-    model: "xiaomi/mimo-v2.5-pro",
+    model,
     prompt,
     maxOutputTokens: 1000,
     temperature: 0.75,
@@ -102,6 +109,10 @@ ${product.reviews
 }
 
 export async function getReviewInsights(product: Product) {
+  "use cache";
+  cacheLife("hours");
+  cacheTag(`product-insights-${product.slug}`);
+
   const averageRating =
     product.reviews.reduce((acc, review) => acc + review.stars, 0) /
     product.reviews.length;
@@ -114,6 +125,8 @@ Extract:
 3. Themes: 3-5 key themes that emerge across reviews
  
 Be specific and concise. Each item should be 3-7 words.
+
+Do not add any formatting or markdown to the text. All text must be plain string. Final output must be valid JSON conforming to the provided Zod schema.
  
 Reviews:
 ${product.reviews
@@ -124,7 +137,7 @@ ${product.reviews
 
   try {
     const { output } = await generateText({
-      model: "xiaomi/mimo-v2.5-pro",
+      model,
       prompt,
       output: Output.object({ schema: ReviewInsightsSchema }),
     });
