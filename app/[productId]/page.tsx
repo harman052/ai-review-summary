@@ -4,6 +4,7 @@ import { getProduct, getProducts } from "@/lib/sample-data";
 import { Reviews } from "@/components/ui/reviews";
 // import { AIReviewSummary } from "@/components/ui/ai-review-summary";
 import { StreamingSummary } from "@/components/ui/streaming-summary";
+import { ReviewInsights } from "@/components/ui/review-insights";
 
 export default async function ProductPage({
   params,
@@ -31,6 +32,7 @@ export default async function ProductPage({
         </div>
         {/* <AIReviewSummary product={product} /> */}
         <StreamingSummary product={product} />
+        <ReviewInsights product={product} />
         {/* Reviews */}
         <Reviews product={product} />
       </div>
