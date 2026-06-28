@@ -2,7 +2,7 @@ import { generateText, streamText, Output } from "ai";
 import { Product, ReviewInsightsSchema } from "./types";
 import { cacheLife, cacheTag } from "next/cache";
 
-const model = "openai/gpt-5.4-mini";
+const model = "xiaomi/mimo-v2.5-pro";
 
 export async function summarizeReviews(product: Product): Promise<string> {
   "use cache";
